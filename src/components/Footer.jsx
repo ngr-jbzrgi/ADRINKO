@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import datasheet from "../assets/datasheet/datasheet.pdf";
 
 const Footer = () => {
@@ -16,15 +17,27 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold text-ice-300 mb-4">Products</h4>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="#products" className="hover:text-ice-400 transition-colors">Our products</a></li>
+              <li>
+                <Link to="/products" className="hover:text-ice-400 transition-colors">
+                  Our products
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-lg font-semibold text-ice-300 mb-4">Company</h4>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="#about" className="hover:text-ice-400 transition-colors">About Us</a></li>
-              <li><a href="#contact" className="hover:text-ice-400 transition-colors">Contact</a></li>
+              <li>
+                <Link to="/about" className="hover:text-ice-400 transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-ice-400 transition-colors">
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
 
