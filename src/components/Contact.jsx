@@ -1,18 +1,38 @@
-import { motion, useInView } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
 
-const Contact = () => {
+const Contact = ({ headingAs = "h2" }) => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
+  const Heading = headingAs;
 
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
   const [status, setStatus] = useState('idle') // idle | sending | success | error
   const [errorMsg, setErrorMsg] = useState('')
 
+  const validate = () => {
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const message = formData.message.trim();
+
+    if (name.length < 2) return "Please enter your name.";
+    // simple email check (basic validation requirement)
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "Please enter a valid email address.";
+    if (message.length < 10) return "Please enter a message (at least 10 characters).";
+    return null;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setStatus('sending')
-    setErrorMsg('')
+    const err = validate();
+    if (err) {
+      setStatus("error");
+      setErrorMsg(err);
+      return;
+    }
+
+    setStatus("sending");
+    setErrorMsg("");
 
     try {
       const form = e.currentTarget
@@ -39,7 +59,7 @@ const Contact = () => {
   }
 
   return (
-    <section id="contact" className="py-20 px-6 relative">
+    <section className="py-20 px-6 relative">
       <div className="max-w-7xl mx-auto">
         <motion.div
           ref={ref}
@@ -47,8 +67,8 @@ const Contact = () => {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl font-bold mb-4 text-gradient">Get In Touch</h2>
-          <p className="text-xl text-gray-400">Ready to discuss your caustic soda needs?</p>
+          <Heading className="text-5xl font-bold mb-4 text-gradient">Contact</Heading>
+          <p className="text-xl text-gray-400">Send a message and we’ll respond with the next steps.</p>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12">
@@ -104,15 +124,15 @@ const Contact = () => {
               {/* optional subject */}
               <input type="hidden" name="_subject" value="ADRINKO - New Contact / Quote Request" />
 
-              {status === 'success' && (
+              {status === "success" && (
                 <div className="mb-4 p-3 rounded-lg bg-green-500/10 border border-green-500/30 text-green-300">
-                  ✅ Thanks! Your message has been sent. We’ll contact you shortly.
+                  Thanks — your message has been sent. We’ll contact you shortly.
                 </div>
               )}
 
-              {status === 'error' && (
+              {status === "error" && (
                 <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-300">
-                  ❌ {errorMsg}
+                  {errorMsg}
                 </div>
               )}
 
@@ -160,18 +180,20 @@ const Contact = () => {
 
               <motion.button
                 type="submit"
-                disabled={status === 'sending'}
+                disabled={status === "sending"}
                 whileHover={
-                  status === 'sending' ? {} : { scale: 1.05, boxShadow: '0 0 30px rgba(56, 189, 248, 0.5)' }
+                  status === "sending"
+                    ? {}
+                    : { scale: 1.05, boxShadow: "0 0 30px rgba(56, 189, 248, 0.5)" }
                 }
-                whileTap={status === 'sending' ? {} : { scale: 0.95 }}
+                whileTap={status === "sending" ? {} : { scale: 0.95 }}
                 className={`w-full py-4 rounded-lg font-semibold transition-all ${
-                  status === 'sending'
+                  status === "sending"
                     ? 'bg-white/10 text-gray-300 cursor-not-allowed'
                     : 'bg-gradient-to-r from-ice-500 to-frost-500 hover:shadow-2xl'
                 }`}
               >
-                {status === 'sending' ? 'Sending...' : 'Send Message'}
+                {status === "sending" ? "Sending..." : "Send Message"}
               </motion.button>
             </form>
           </motion.div>

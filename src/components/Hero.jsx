@@ -1,8 +1,9 @@
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Hero = ({ opacity }) => {
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[80vh] md:min-h-screen flex items-center justify-center overflow-hidden">
       <motion.div
         style={{ opacity }}
         className="absolute inset-0 z-0"
@@ -50,25 +51,25 @@ const Hero = ({ opacity }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9 }}
           >
-           <a href="#products">
-            <motion.button
+            <Link to="/products">
+              <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-gradient-to-r from-ice-500 to-frost-500 rounded-full font-semibold shadow-lg hover:shadow-ice-500/40 transition-all"
           >
            Explore Products
           </motion.button>
-  </a>
+            </Link>
             
-            <a href="#contact">
-    <motion.button
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      className="px-8 py-4 border border-white/20 rounded-full font-semibold text-white hover:bg-white/10 transition-all"
-    >
-      Contact Sales
-    </motion.button>
-  </a>
+            <Link to="/contact">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 border border-white/20 rounded-full font-semibold text-white hover:bg-white/10 transition-all"
+              >
+                Contact Sales
+              </motion.button>
+            </Link>
           </motion.div>
         </motion.div>
 
